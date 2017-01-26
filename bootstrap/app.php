@@ -97,6 +97,7 @@ $app->singleton((EasyWeChat\Foundation\Application::class), function ($app) {
 // $app->register(App\Providers\EventServiceProvider::class);
 $app->register(Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class);
 $app->register(Wn\Generators\CommandsServiceProvider::class);
+$app->register(Overtrue\LaravelWechat\ServiceProvider::class);
 
 /*
 |--------------------------------------------------------------------------
