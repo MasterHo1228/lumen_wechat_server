@@ -2,14 +2,27 @@
 namespace App\Http\Controllers;
 
 use EasyWeChat\Foundation\Application;
+use Handlers\Wechat\Messages\EventsHandler;
+use Handlers\Wechat\Messages\LocationHandler;
+use Handlers\Wechat\Messages\MultiMediaHandler;
+use Handlers\Wechat\Messages\TextHandler;
 use Log;
 
 class WechatController extends Controller
 {
-    protected $options;
+    /**
+     * @var array Wechat Service Server options
+     */
+    private $options;
 
+    /**
+     * @var Application EasyWechat Object
+     */
     private $app;
 
+    /**
+     * Initialize Wechat Service Server
+     */
     public function __construct()
     {
         $this->options = [
@@ -33,76 +46,34 @@ class WechatController extends Controller
         Log::info('request arrived.');
 
         $this->app->server->setMessageHandler(function ($message) {
-            $reply = '';
             switch ($message->MsgType) {
+                # 事件消息...
                 case 'event':
-                    # 事件消息...
-                    switch ($message->Event) {
-                        case 'subscribe':
-                            $reply = "嗯 灰常感谢你的关注 公众号功能在不断完善中 若招呼不周 多多见谅哈~~/:dig";
-                            break;
-                        default:
-                            # code...
-                            break;
-                    }
+                    $response = (new EventsHandler())->handleMessage($message->Event);
                     break;
+                # 文字消息...
                 case 'text':
-                    # 文字消息...
-                    switch ($message->Content) {
-                        case 'doge':
-                            $reply = "精神污染~";
-                            break;
-                        case 'hello':
-                            $reply = "哈喽~";
-                            break;
-                        case '你好':
-                            $reply = "雷猴~";
-                            break;
-                        default:
-                            $reply = "哦/:dig/:dig";
-                            break;
-                    }
+                    $response = (new TextHandler())->handleMessage($message->Content);
                     break;
+                # 多媒体消息
                 case 'image':
-                    # 图片消息...
-                    $reply = "发了个表情包给我，还是~~~？/:dig";
-                    break;
                 case 'voice':
-                    # 语音消息...
-                    $reply = "发文字 语音懒得听~/:dig";
-                    break;
                 case 'video':
-                    # 视频消息...
-                    $reply = "嗯！肯定是。。。。。视频一个~/:dig";
-                    break;
                 case 'shortvideo':
-                    # 视频消息...
-                    $reply = "小视频？？？！！！/:dig";
-                    break;
-                case 'location':
-                    # 坐标消息...
-                    $Label = $message->Label;
-                    $Location_X = $message->Location_X;
-                    $Location_Y = $message->Location_Y;
-                    $Scale = $message->Scale;
-
-                    $reply .= "名称：" . $Label . "\n";
-                    $reply .= "经度：" . $Location_Y . "\n";
-                    $reply .= "纬度：" . $Location_X . "\n";
-                    $reply .= "缩放：" . $Scale . "\n";
-                    $reply .= "呦 要我约你的节奏？？/:dig";
-                    break;
                 case 'link':
-                    # 链接消息...
-                    $reply = "老实告诉我 这是什么链接呢~~/:dig";
+                    $response = (new MultiMediaHandler())->handleMessage($message->MsgType);
                     break;
-                // ... 其它消息
+                # 坐标消息
+                case 'location':
+                    $response = (new LocationHandler())->handleMessage($message->Location_X, $message->Location_Y, $message->Scale, $message->Label);
+                    break;
+                # 其它消息
                 default:
                     # code...
-                    $reply = "我就默默的看着你装逼~~/:dig";
+                    $response = "我就默默的看着你装逼~~/:dig";
                     break;
             }
-            return $reply;
+            return $response;
         });
 
         Log::info('return response.');
