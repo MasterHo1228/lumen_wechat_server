@@ -15,4 +15,4 @@ $app->get('/', function () use ($app) {
     return $app->version();
 });
 
-Route::any('/server', 'WechatController@serve');
+$app::any('/server', 'WechatController@serve');
