@@ -1,16 +1,38 @@
 <?php
 namespace App\Http\Controllers;
 
+use EasyWeChat\Foundation\Application;
 use Log;
 
 class WechatController extends Controller
 {
+    protected $options;
+
+    private $app;
+
+    public function __construct()
+    {
+        $this->options = [
+            'debug' => true,
+            'app_id' => 'wx5b3373476b179003', //Wechat AppID
+            'secret' => 'd80b6a2de78dedec4c2dd87fc6723668', //Wechat AppSecret
+            'token' => 'm1As3tE5Rh30oQ12O28', //Wechat Token
+            'aes_key' => 'P6P3UaPu1xToxt0mXB0n8tYVBU1QOi3lg3xhirLtewa', //optional
+            'log' => [
+                'level' => 'debug',
+                'file' => storage_path('logs/wechat.log'),
+            ],
+            //...
+        ];
+
+        $this->app = new Application($this->options);
+    }
+
     public function serve()
     {
-        Log::info('request arrived.'); # 注意：Log 为 Laravel 组件，所以它记的日志去 Laravel 日志看，而不是 EasyWeChat 日志
+        Log::info('request arrived.');
 
-        $wechat = app('wechat');
-        $wechat->server->setMessageHandler(function ($message) {
+        $this->app->server->setMessageHandler(function ($message) {
             $reply = '';
             switch ($message->MsgType) {
                 case 'event':
@@ -85,6 +107,6 @@ class WechatController extends Controller
 
         Log::info('return response.');
 
-        return $wechat->server->serve();
+        return $this->app->server->serve();
     }
 }

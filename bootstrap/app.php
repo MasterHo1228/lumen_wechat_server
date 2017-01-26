@@ -1,8 +1,5 @@
 <?php
 
-use Laravel\Lumen\Application;
-use Overtrue\LaravelWechat\CacheBridge;
-
 require_once __DIR__.'/../vendor/autoload.php';
 
 try {
@@ -51,17 +48,6 @@ $app->singleton(
     App\Console\Kernel::class
 );
 
-$app->singleton((EasyWeChat\Foundation\Application::class), function ($app) {
-
-    $app = new Application(config('wechat'));
-
-    if (config('wechat.use_laravel_cache')) {
-        $app->cache = new CacheBridge();
-    }
-
-    return $app;
-});
-
 /*
 |--------------------------------------------------------------------------
 | Register Middleware
@@ -92,12 +78,9 @@ $app->singleton((EasyWeChat\Foundation\Application::class), function ($app) {
 |
 */
 
-// $app->register(App\Providers\AppServiceProvider::class);
+$app->register(App\Providers\AppServiceProvider::class);
 // $app->register(App\Providers\AuthServiceProvider::class);
 // $app->register(App\Providers\EventServiceProvider::class);
-$app->register(Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class);
-$app->register(Wn\Generators\CommandsServiceProvider::class);
-$app->register(Overtrue\LaravelWechat\ServiceProvider::class);
 
 /*
 |--------------------------------------------------------------------------
