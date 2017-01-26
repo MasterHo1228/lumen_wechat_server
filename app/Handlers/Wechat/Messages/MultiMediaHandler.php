@@ -6,7 +6,7 @@
  * Time: 22:22
  */
 
-namespace Handlers\Wechat\Messages;
+namespace App\Handlers\Wechat\Messages;
 
 /**
  * Wechat MultiMedia messages handler

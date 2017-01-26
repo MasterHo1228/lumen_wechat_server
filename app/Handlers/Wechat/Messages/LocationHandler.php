@@ -6,7 +6,7 @@
  * Time: 22:34
  */
 
-namespace Handlers\Wechat\Messages;
+namespace App\Handlers\Wechat\Messages;
 
 /**
  * Wechat location messages handler

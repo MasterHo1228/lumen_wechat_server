@@ -6,7 +6,7 @@
  * Time: 22:01
  */
 
-namespace Handlers\Wechat\Messages;
+namespace App\Handlers\Wechat\Messages;
 
 use Illuminate\Database\Eloquent\Model;
 

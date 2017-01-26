@@ -6,7 +6,7 @@
  * Time: 22:00
  */
 
-namespace Handlers\Wechat\Messages;
+namespace App\Handlers\Wechat\Messages;
 
 /**
  * Wechat Event messages handler

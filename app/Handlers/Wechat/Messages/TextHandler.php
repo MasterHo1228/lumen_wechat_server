@@ -6,7 +6,7 @@
  * Time: 22:19
  */
 
-namespace Handlers\Wechat\Messages;
+namespace App\Handlers\Wechat\Messages;
 
 /**
  * Wechat Plain text messages handler

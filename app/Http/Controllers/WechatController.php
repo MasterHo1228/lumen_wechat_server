@@ -1,11 +1,11 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Handlers\Wechat\Messages\EventsHandler;
+use App\Handlers\Wechat\Messages\LocationHandler;
+use App\Handlers\Wechat\Messages\MultiMediaHandler;
+use App\Handlers\Wechat\Messages\TextHandler;
 use EasyWeChat\Foundation\Application;
-use Handlers\Wechat\Messages\EventsHandler;
-use Handlers\Wechat\Messages\LocationHandler;
-use Handlers\Wechat\Messages\MultiMediaHandler;
-use Handlers\Wechat\Messages\TextHandler;
 use Log;
 
 class WechatController extends Controller
