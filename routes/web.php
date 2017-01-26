@@ -15,4 +15,5 @@ $app->get('/', function () use ($app) {
     return $app->version();
 });
 
-$app::any('/server', 'WechatController@serve');
+$app->get('/server', 'WechatController@serve');
+$app->post('/server', 'WechatController@serve');
