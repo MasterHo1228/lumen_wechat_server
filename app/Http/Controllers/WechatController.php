@@ -5,47 +5,21 @@ use App\Handlers\Wechat\Messages\EventsHandler;
 use App\Handlers\Wechat\Messages\LocationHandler;
 use App\Handlers\Wechat\Messages\MultiMediaHandler;
 use App\Handlers\Wechat\Messages\TextHandler;
-use EasyWeChat\Foundation\Application;
 use Log;
 
 class WechatController extends Controller
 {
     /**
-     * @var array Wechat Service Server options
+     * Response request messages from Wechat
+     *
+     * @return string
      */
-    private $options;
-
-    /**
-     * @var Application EasyWechat Object
-     */
-    private $app;
-
-    /**
-     * Initialize Wechat Service Server
-     */
-    public function __construct()
-    {
-        $this->options = [
-            'debug' => true,
-            'app_id' => 'wx5b3373476b179003', //Wechat AppID
-            'secret' => 'd80b6a2de78dedec4c2dd87fc6723668', //Wechat AppSecret
-            'token' => 'm1As3tE5Rh30oQ12O28', //Wechat Token
-            'aes_key' => 'P6P3UaPu1xToxt0mXB0n8tYVBU1QOi3lg3xhirLtewa', //optional
-            'log' => [
-                'level' => 'debug',
-                'file' => storage_path('logs/wechat.log'),
-            ],
-            //...
-        ];
-
-        $this->app = new Application($this->options);
-    }
-
     public function serve()
     {
         Log::info('request arrived.');
 
-        $this->app->server->setMessageHandler(function ($message) {
+        $wechat = app('wechat');
+        $wechat->server->setMessageHandler(function($message){
             switch ($message->MsgType) {
                 # 事件消息...
                 case 'event':
@@ -78,6 +52,6 @@ class WechatController extends Controller
 
         Log::info('return response.');
 
-        return $this->app->server->serve();
+        return $wechat->server->serve();
     }
 }
