@@ -17,3 +17,6 @@ $app->get('/', function () use ($app) {
 
 $app->get('/server', 'WechatController@serve');
 $app->post('/server', 'WechatController@serve');
+
+$app->get('/users', 'UsersController@users');
+$app->get('/user/{openID}', 'UsersController@user');
