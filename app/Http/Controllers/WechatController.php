@@ -19,11 +19,16 @@ class WechatController extends Controller
         Log::info('request arrived.');
 
         $wechat = app('wechat');
-        $wechat->server->setMessageHandler(function($message){
+        $userApi = $wechat->user;
+
+        $wechat->server->setMessageHandler(function ($message) use ($userApi) {
             switch ($message->MsgType) {
                 # 事件消息...
                 case 'event':
-                    $response = (new EventsHandler())->handleMessage($message->Event);
+                    $user = $userApi->get($message->FromUserName);
+                    $handler = new EventsHandler($user);
+
+                    $response = $handler->handleMessage($message->Event);
                     break;
                 # 文字消息...
                 case 'text':
