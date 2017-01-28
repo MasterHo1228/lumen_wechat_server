@@ -20,3 +20,8 @@ $app->post('/server', 'WechatController@serve');
 
 $app->get('/users', 'UsersController@users');
 $app->get('/user/{openID}', 'UsersController@user');
+
+$app->get('/image', 'MaterialsController@image');
+$app->get('/audio', 'MaterialsController@audio');
+$app->get('/video', 'MaterialsController@video');
+$app->get('/article', 'MaterialsController@article');

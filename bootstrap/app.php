@@ -83,6 +83,7 @@ $app->register(App\Providers\AppServiceProvider::class);
 // $app->register(App\Providers\EventServiceProvider::class);
 
 $app->register(Overtrue\LaravelWechat\ServiceProvider::class);
+$app->register(Irazasyed\Larasupport\Providers\ArtisanServiceProvider::class);
 
 /*
 |--------------------------------------------------------------------------
