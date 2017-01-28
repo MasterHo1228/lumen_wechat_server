@@ -20,23 +20,52 @@ class MaterialsController extends Controller
         $this->material = $material->material;
     }
 
-    public function image()
+    public function getMedia($mediaID)
     {
-        return $this->material->uploadImage(public_path() . '/images/demo.jpg');
+        return $this->material->get($mediaID);
     }
 
-    public function audio()
+    public function imageUpload()
     {
-
+        //TODO image变量填写完整上传图片文件路径
+        $image = public_path() . '/images/' . '';
+        return $this->material->uploadImage($image);
     }
 
-    public function video()
+    public function imageList()
     {
-
+        return $this->material->lists('image');
     }
 
-    public function article()
+    public function audioUpload()
     {
+        //TODO audio变量填写完整上传图片文件路径
+        $audio = public_path() . '/audios/' . '';
+        return $this->material->uploadVoice($audio);
+    }
 
+    public function audioList()
+    {
+        return $this->material->lists('voice');
+    }
+
+    public function videoUpload()
+    {
+        //TODO Waiting to complete~~
+    }
+
+    public function videoList()
+    {
+        return $this->material->lists('video');
+    }
+
+    public function articleUpload()
+    {
+        //TODO Waiting to complete~~
+    }
+
+    public function articleList()
+    {
+        return $this->material->lists('news');
     }
 }

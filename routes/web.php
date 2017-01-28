@@ -18,10 +18,22 @@ $app->get('/', function () use ($app) {
 $app->get('/server', 'WechatController@serve');
 $app->post('/server', 'WechatController@serve');
 
+/*-------------------------UsersController-------------------------*/
+
 $app->get('/users', 'UsersController@users');
 $app->get('/user/{openID}', 'UsersController@user');
 
-$app->get('/image', 'MaterialsController@image');
-$app->get('/audio', 'MaterialsController@audio');
-$app->get('/video', 'MaterialsController@video');
-$app->get('/article', 'MaterialsController@article');
+/*-------------------------MaterialController-------------------------*/
+$app->get('/media/{mediaID}', 'MaterialsController@getMedia');
+
+$app->get('/image/upload', 'MaterialsController@imageUpload');
+$app->get('/image', 'MaterialsController@imageList');
+
+$app->get('/audio/upload', 'MaterialsController@audioUpload');
+$app->get('/audio', 'MaterialsController@audioList');
+
+$app->get('/video/upload', 'MaterialsController@videoUpload');
+$app->get('/video', 'MaterialsController@videoList');
+
+$app->get('/article/upload', 'MaterialsController@articleUpload');
+$app->get('/article', 'MaterialsController@articleList');

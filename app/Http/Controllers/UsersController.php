@@ -34,6 +34,7 @@ class UsersController extends Controller
         return $user;
     }
 
+    //TODO 预留的改用户备注功能
 //    public function remark(Request $request){
 //        return $this->wechat->user->remark($request->openID,$request->name);
 //    }
